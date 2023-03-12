@@ -31,7 +31,7 @@
 		"node": "^16.19.1",
 		"node-fetch": "^3.3.1",
 		"nodemon": "^2.0.21",
-		"puppeteer": "^18.1.0",
+		"puppeteer-core": "^16.2.0",
 		"serverless-http": "^3.2.0"
 	}
 }
