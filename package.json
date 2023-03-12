@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "script.js",
 	"scripts": {
-		"start": "nodemon pages/api/server.js"
+		"start": "node start",
+		"build": "npm build"
 	},
 	"repository": {
 		"type": "git",

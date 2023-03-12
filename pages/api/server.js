@@ -85,9 +85,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// create a server to listen on port 3000
-app.listen(3000, () => {
-	console.log("server started on port 3000");
-});
+// // create a server to listen on port 3000
+// app.listen(3000, () => {
+// 	console.log("server started on port 3000");
+// });
 
 export default app;
