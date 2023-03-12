@@ -22,6 +22,7 @@
 	"types": "module",
 	"dependencies": {
 		"body-parser": "^1.20.2",
+		"bufferutil": "^4.0.7",
 		"cors": "^2.8.5",
 		"encoding": "^0.1.13",
 		"express": "^4.18.2",
@@ -32,6 +33,7 @@
 		"node-fetch": "^3.3.1",
 		"nodemon": "^2.0.21",
 		"puppeteer-core": "^16.2.0",
-		"serverless-http": "^3.2.0"
+		"serverless-http": "^3.2.0",
+		"utf-8-validate": "^6.0.3"
 	}
 }
