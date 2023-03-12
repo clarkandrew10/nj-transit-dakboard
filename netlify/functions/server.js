@@ -1,10 +1,11 @@
-import puppeteer, { executablePath } from "puppeteer-core";
+import puppeteer from "puppeteer";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import serverless from "serverless-http";
 import bodyParser from "body-parser";
+import chromium from "chrome-aws-lambda";
 import "encoding";
 
 const app = express();
@@ -12,10 +13,9 @@ const app = express();
 const getRouteData = async () => {
 	try {
 		// Start a Puppeteer session
-		const browser = await puppeteer.launch({
+		const browser = await chromium.puppeteer.launch({
 			headless: false,
 			defaultViewport: null,
-			executablePath: executablePath(),
 		});
 
 		// Open a new page
