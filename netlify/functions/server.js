@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
