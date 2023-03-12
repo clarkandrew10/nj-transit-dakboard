@@ -5,17 +5,19 @@ import helmet from "helmet";
 import serverless from "serverless-http";
 import bodyParser from "body-parser";
 import chromium from "chrome-aws-lambda";
+import puppeteer from "puppeteer-core";
 import "encoding";
 
 const app = express();
 
 const getRouteData = async () => {
 	try {
-		const executablePath = await chromium.executablePath;
 		// Start a Puppeteer session
-		const browser = await chromium.puppeteer.launch({
+		const browser = await puppeteer.launch({
 			headless: true,
-			executablePath: executablePath,
+			executablePath:
+				process.env.CHROME_EXECUTABLE_PATH ||
+				(await chromium.executablePath),
 			defaultViewport: null,
 		});
 
