@@ -21,12 +21,16 @@ const getRouteData = async () => {
 		const page = await browser.newPage();
 
 		// navigate to my bus site and wait for the page to load
-		await page.goto(
-			"https://mybusnow.njtransit.com/bustime/wireless/html/eta.jsp?route=190&direction=New+York&id=13498&showAllBusses=on",
-			{
-				waitUntil: "domcontentloaded",
-			}
-		);
+		await page
+			.goto(
+				"https://mybusnow.njtransit.com/bustime/wireless/html/eta.jsp?route=190&direction=New+York&id=13498&showAllBusses=on",
+				{
+					waitUntil: "domcontentloaded",
+				}
+			)
+			.then(() => {
+				console.log("page loaded");
+			});
 
 		// Get page data
 		const results = await page.evaluate(() => {
@@ -52,7 +56,7 @@ const getRouteData = async () => {
 				data,
 			};
 		});
-
+		console.log("pulled results", results);
 		// close browser and return results
 		await browser.close();
 		return {
@@ -60,6 +64,7 @@ const getRouteData = async () => {
 			body: JSON.stringify(results),
 		};
 	} catch (e) {
+		console.log(e);
 		return {
 			statusCode: 500,
 			body: JSON.stringify(e),
