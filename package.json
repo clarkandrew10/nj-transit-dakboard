@@ -4,8 +4,7 @@
 	"description": "",
 	"main": "script.js",
 	"scripts": {
-		"start": "node start",
-		"build": "npm build"
+		"start": "node pages/api/server.js"
 	},
 	"repository": {
 		"type": "git",
