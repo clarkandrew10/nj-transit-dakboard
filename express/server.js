@@ -4,7 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import serverless from "serverless-http";
-require("encoding");
+import "encoding";
 
 const app = express();
 app.use(morgan("combined"));
@@ -67,5 +67,8 @@ app.listen(3001, () => {
 	console.log("listening on port 3001");
 });
 
-module.exports = app;
-module.exports.handler = serverless(app);
+const lambda = serverless(app);
+
+export async function handler(event, context) {
+	return lambda(event, context);
+}
