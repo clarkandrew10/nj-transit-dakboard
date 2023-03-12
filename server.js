@@ -59,9 +59,15 @@ const getRouteData = async () => {
 
 		// close browser and return results
 		await browser.close();
-		return results;
+		return {
+			statusCode: 200,
+			body: JSON.stringify(results),
+		};
 	} catch (e) {
-		return e;
+		return {
+			statusCode: 500,
+			body: JSON.stringify(e),
+		};
 	}
 };
 
