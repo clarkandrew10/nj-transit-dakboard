@@ -1,4 +1,3 @@
-import puppeteer from "puppeteer";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -12,9 +11,11 @@ const app = express();
 
 const getRouteData = async () => {
 	try {
+		const executablePath = await chromium.executablePath;
 		// Start a Puppeteer session
 		const browser = await chromium.puppeteer.launch({
-			headless: false,
+			headless: true,
+			executablePath: executablePath,
 			defaultViewport: null,
 		});
 
