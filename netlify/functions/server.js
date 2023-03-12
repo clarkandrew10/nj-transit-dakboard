@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer-core";
+import puppeteer, { executablePath } from "puppeteer-core";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -15,6 +15,7 @@ const getRouteData = async () => {
 		const browser = await puppeteer.launch({
 			headless: false,
 			defaultViewport: null,
+			executablePath: executablePath(),
 		});
 
 		// Open a new page
