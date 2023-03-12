@@ -4,8 +4,7 @@
 	"description": "",
 	"main": "script.js",
 	"scripts": {
-		"build": "netlify-lambda build netlify/functions",
-		"start": "nodemon index.js"
+		"start": "nodemon pages/api/server.js"
 	},
 	"repository": {
 		"type": "git",

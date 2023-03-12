@@ -5,15 +5,14 @@ import helmet from "helmet";
 import serverless from "serverless-http";
 import bodyParser from "body-parser";
 import chromium from "chrome-aws-lambda";
-import puppeteer from "puppeteer-core";
-import "encoding";
+// import "encoding";
 
 const app = express();
 
 const getRouteData = async () => {
 	try {
 		// Start a Puppeteer session
-		const browser = await puppeteer.launch({
+		const browser = await chromium.puppeteer.launch({
 			headless: true,
 			executablePath:
 				process.env.CHROME_EXECUTABLE_PATH ||
@@ -76,7 +75,7 @@ const getRouteData = async () => {
 	}
 };
 
-app.get("/.netlify/functions/server", async (req, res) => {
+app.get("/", async (req, res) => {
 	res.send(await getRouteData());
 });
 
@@ -86,4 +85,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-exports.handler = serverless(app);
+// create a server to listen on port 3000
+app.listen(3000, () => {
+	console.log("server started on port 3000");
+});
+
+export default app;
