@@ -67,7 +67,7 @@ const getRouteData = async () => {
 	}
 };
 
-app.get("/", async (req, res) => {
+app.get("/.netlify/functions/server", async (req, res) => {
 	res.send(await getRouteData());
 });
 
