@@ -4,14 +4,10 @@ import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import serverless from "serverless-http";
-import http, { createServer } from "http";
-import https from "https";
+import bodyParser from "body-parser";
 import "encoding";
 
 const app = express();
-app.use(morgan("combined"));
-app.use(helmet());
-app.use(cors());
 
 const getRouteData = async () => {
 	try {
@@ -71,16 +67,10 @@ const getRouteData = async () => {
 	}
 };
 
-app.get("/", async (req, res) => {
-	res.send(await getRouteData());
-});
+app.use(morgan("combined"));
+app.use(helmet());
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-http.createServer(app).listen(3001);
-
-export default app;
-
-const lambda = serverless(app);
-
-export async function handler(event, context) {
-	return lambda(event, context);
-}
+exports.handler = serverless(app);
