@@ -4,6 +4,8 @@ import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import serverless from "serverless-http";
+import http, { createServer } from "http";
+import https from "https";
 import "encoding";
 
 const app = express();
@@ -67,9 +69,7 @@ app.get("/", async (req, res) => {
 	res.send(await getRouteData());
 });
 
-app.listen(3001, () => {
-	console.log("listening on port 3001");
-});
+http.createServer(app).listen(3001);
 
 export default app;
 
