@@ -12,51 +12,55 @@ app.use(helmet());
 app.use(cors());
 
 const getRouteData = async () => {
-	// Start a Puppeteer session
-	const browser = await puppeteer.launch({
-		headless: false,
-		defaultViewport: null,
-	});
+	try {
+		// Start a Puppeteer session
+		const browser = await puppeteer.launch({
+			headless: false,
+			defaultViewport: null,
+		});
 
-	// Open a new page
-	const page = await browser.newPage();
+		// Open a new page
+		const page = await browser.newPage();
 
-	// navigate to my bus site and wait for the page to load
-	await page.goto(
-		"https://mybusnow.njtransit.com/bustime/wireless/html/eta.jsp?route=190&direction=New+York&id=13498&showAllBusses=on",
-		{
-			waitUntil: "domcontentloaded",
-		}
-	);
-
-	// Get page data
-	const results = await page.evaluate(() => {
-		// my bus site stores all information we need in <strong> elements
-		const strongEle = document.querySelectorAll(".larger");
-
-		// make an array from stringEle
-		const strongEleArray = Array.from(strongEle);
-
-		// put every two elements into a new object and return the array
-		const data = strongEleArray.reduce((acc, curr, index) => {
-			if (index % 2 === 0) {
-				acc.push({
-					busNumber: curr.innerText,
-					eta: strongEleArray[index + 1].innerText,
-				});
+		// navigate to my bus site and wait for the page to load
+		await page.goto(
+			"https://mybusnow.njtransit.com/bustime/wireless/html/eta.jsp?route=190&direction=New+York&id=13498&showAllBusses=on",
+			{
+				waitUntil: "domcontentloaded",
 			}
-			return acc;
-		}, []);
-		const updatedDate = new Date();
-		return {
-			updatedDate,
-			data,
-		};
-	});
+		);
 
-	// close browser and return results
-	await browser.close();
-	return results;
+		// Get page data
+		const results = await page.evaluate(() => {
+			// my bus site stores all information we need in <strong> elements
+			const strongEle = document.querySelectorAll(".larger");
+
+			// make an array from stringEle
+			const strongEleArray = Array.from(strongEle);
+
+			// put every two elements into a new object and return the array
+			const data = strongEleArray.reduce((acc, curr, index) => {
+				if (index % 2 === 0) {
+					acc.push({
+						busNumber: curr.innerText,
+						eta: strongEleArray[index + 1].innerText,
+					});
+				}
+				return acc;
+			}, []);
+			const updatedDate = new Date();
+			return {
+				updatedDate,
+				data,
+			};
+		});
+
+		// close browser and return results
+		await browser.close();
+		return results;
+	} catch (e) {
+		return e;
+	}
 };
 
 app.get("/", async (req, res) => {
@@ -66,6 +70,8 @@ app.get("/", async (req, res) => {
 app.listen(3001, () => {
 	console.log("listening on port 3001");
 });
+
+export default app;
 
 const lambda = serverless(app);
 
